@@ -77,25 +77,6 @@ async function checkForDisconnectButton() {
     }
 }
 
-async function waitForElement(locators, timeout = 10000) {
-    const startTime = Date.now();
-    
-    while (Date.now() - startTime < timeout) {
-        for (const locator of locators) {
-            try {
-                const element = await driver.$(locator);
-                if (await element.isDisplayed()) {
-                    return element;
-                }
-            } catch (error) {
-                // Continue to next locator
-            }
-        }
-        await driver.pause(500); // Wait 500ms before trying again
-    }
-    throw new Error(`Element not found with any of the provided locators within ${timeout}ms`);
-}
-
 module.exports = {
     initializeDriver,
     startSession,
@@ -105,5 +86,4 @@ module.exports = {
     checkForDisconnectButton,
     disconnectVPN,
     closeDriver,
-    waitForElement,
 };
